@@ -189,49 +189,54 @@ def main():
 
         print "\n[1/5] Read in {} chars of ciphertext and {} hashes, {} of which are cracked".format(len(ciphertext), len(hashes), len(xored))
 
+        if xored:
         # 3. Use the XORed shares to generate the key
-        secret = sss.SecretSharer.recover_secret(xored)
-        print "[2/5] The cracked passwords generated this key: {}".format(secret)
+            secret = sss.SecretSharer.recover_secret(xored)
+            print "[2/5] The cracked passwords generated this key: {}".format(secret)
 
         # 4. Use the generated key to attempt to decrypt the next level and do a quick check to see if we managed to decrypt it
-        print "[3/5] Using the key to attempt to decrypt the next level..."
-        d = decrypt(ciphertext, secret)
-        try:
-            j = json.loads(d)
-            cipher = len(j["ciphertext"])
-            hashes = len(j["hashes"])
-            print "      Looks like we unlocked the next level!"
-            print "      It has {} chars of ciphertext and {} hashes.".format(cipher, hashes)
-            print "      Here is the key that was used to unlock it: {}".format(secret)
-            
-            saveloc = current_json_file + ".unlocked.json"
-            f = open(saveloc, "wb")
-            f.write(d)
-            f.close()
-            print "[4/5] Saved what was decrypted to {}".format(saveloc)
-            
-            saveseceret = "00064-unlocked.secrets"
-            s = open(saveseceret, "a+")
-            s.write(secret)
-            s.close()
-            
-            save_new_hashes = "new-locked.hashses"
-            hs = open(save_new_hashes, "wb")
-            for ln in j["hashes"]:
-                hs.write("%s\n" % ln)
-            hs.close()
+            print "[3/5] Using the key to attempt to decrypt the next level..."
+            d = decrypt(ciphertext, secret)
+            try:
+                j = json.loads(d)
+                cipher = len(j["ciphertext"])
+                hashes = len(j["hashes"])
+                print "      Looks like we unlocked the next level!"
+                print "      It has {} chars of ciphertext and {} hashes.".format(cipher, hashes)
+                print "      Here is the key that was used to unlock it: {}".format(secret)
+                
+                saveloc = current_json_file + ".unlocked.json"
+                f = open(saveloc, "wb")
+                f.write(d)
+                f.close()
+                print "[4/5] Saved what was decrypted to {}".format(saveloc)
+                
+                saveseceret = "00064-unlocked.secrets"
+                s = open(saveseceret, "a+")
+                s.write(secret)
+                s.close()
+                
+                save_new_hashes = "new-locked.hashses"
+                hs = open(save_new_hashes, "wb")
+                for ln in j["hashes"]:
+                    hs.write("%s\n" % ln)
+                hs.close()
 
-            print "[5/5] Saved the seceret key {} to and new hashes to {}".format(saveseceret,save_new_hashes)
-            print "**********Congratulation!!!!*************"
-            send_email(EMAIL,PASSWORD,'ALERT : THE NEXT LEVEL OF INFERNOBALL HAS BEEN UNLOCKED!!','The secret key : {}'.format(secret),saveloc)
-            success = True
+                print "[5/5] Saved the seceret key {} to and new hashes to {}".format(saveseceret,save_new_hashes)
+                print "**********Congratulation!!!!*************"
+                send_email(EMAIL,PASSWORD,'ALERT : THE NEXT LEVEL OF INFERNOBALL HAS BEEN UNLOCKED!!','The secret key : {}'.format(secret),saveloc)
+                success = True
 
-        except ValueError:
+            except ValueError:
+                success = False
+                print "[4/5] Tough luck!!!!!!!"
+                print "      We most likely don't have enough passwords cracked because what was decrypted doesn't look like a JSON"
+                print "      But still, have a look at the output file to be extra sure!"
+                time.sleep(5)
+        else:
             success = False
-            print "[4/5] Tough luck!!!!!!!"
-            print "      We most likely don't have enough passwords cracked because what was decrypted doesn't look like a JSON"
-            print "      But still, have a look at the output file to be extra sure!"
             time.sleep(5)
-
+            print "No passwords cracked yet...trying" 
+           
 if __name__ == "__main__":
     main()

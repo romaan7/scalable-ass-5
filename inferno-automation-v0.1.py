@@ -9,7 +9,7 @@ from hashlib import sha256
 
 
 EMAIL="shaikhr@tcd.ie"
-PASSWORD="namor1TCD"
+PASSWORD=""
 
 # usage
 def usage():

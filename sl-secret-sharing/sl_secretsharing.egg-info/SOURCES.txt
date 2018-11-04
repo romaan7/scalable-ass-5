@@ -1,0 +1,12 @@
+README.md
+setup.py
+sl_secretsharing/__init__.py
+sl_secretsharing/polynomials.py
+sl_secretsharing/primes.py
+sl_secretsharing/sharing.py
+sl_secretsharing.egg-info/PKG-INFO
+sl_secretsharing.egg-info/SOURCES.txt
+sl_secretsharing.egg-info/dependency_links.txt
+sl_secretsharing.egg-info/not-zip-safe
+sl_secretsharing.egg-info/requires.txt
+sl_secretsharing.egg-info/top_level.txt

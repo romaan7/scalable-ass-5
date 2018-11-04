@@ -1,10 +1,7 @@
-import base64
-import os,sys,argparse
+import os,sys,argparse,base64,json
 from Crypto.Cipher import AES
-import json
 import secretsharing as sss
 from hashlib import sha256
-import sys
 
 
 
@@ -96,58 +93,53 @@ shares = data['shares']
 # 2. XOR the cracked passwords with their corresponding shares to create a list of
 #    valid shares that could then be used to try to recover the key
 
+def main():
+	global hashes, shares
+	xored = []
+	for h, s in zip(hashes, shares):
+		for number, pot_h in enumerate(pot_only_hashes):
+			if h==pot_h:
+				xored.append(str(pxor(pot_only_passwords[number], s)))
 
-xored = []
-for h, s in zip(hashes, shares):
-    for number, pot_h in enumerate(pot_only_hashes):
-        if h==pot_h:
-            xored.append(str(pxor(pot_only_passwords[number], s)))
-
-print "\n[1/4] Read in {} chars of ciphertext and {} hashes, {} of which are cracked".format(len(ciphertext), len(hashes), len(xored))
-
-
-# 3. Use the XORed shares to generate the key
-secret = sss.SecretSharer.recover_secret(xored)
-print "[2/4] The cracked passwords generated this key: {}".format(secret)
+	print "\n[1/4] Read in {} chars of ciphertext and {} hashes, {} of which are cracked".format(len(ciphertext), len(hashes), len(xored))
 
 
-# 4. Use the generated key to attempt to decrypt the next level and do a quick check to see if we managed to decrypt it
-print "[3/4] Using the key to attempt to decrypt the next level..."
-d = decrypt(ciphertext, secret)
-success = False
-
-try:
-    j = json.loads(d)
-    cipher = len(j["ciphertext"])
-    hashes = len(j["hashes"])
-    print "      Looks like we unlocked the next level!"
-    print "      It has {} chars of ciphertext and {} hashes.".format(cipher, hashes)
-    print "      Here is the key that was used to unlock it: {}".format(secret)
-    success = True
-except Exception:
-    print "      We most likely don't have enough passwords cracked because what was decrypted doesn't look like a JSON"
-    print "      But still, have a look at the output file to be extra sure!"
+	# 3. Use the XORed shares to generate the key
+	secret = sss.SecretSharer.recover_secret(xored)
+	print "[2/4] The cracked passwords generated this key: {}".format(secret)
 
 
-# 5. Save the result of the decryption to a file
-saveloc = location + ".unlocked.json"
-f = open(saveloc, "wb")
-f.write(d)
-f.close()
-print "[4/4] Saved what was decrypted to {}".format(saveloc)
+	# 4. Use the generated key to attempt to decrypt the next level and do a quick check to see if we managed to decrypt it
+	print "[3/4] Using the key to attempt to decrypt the next level..."
+	d = decrypt(ciphertext, secret)
+	success = False
 
-if success: print """
+	try:
+	    j = json.loads(d)
+	    cipher = len(j["ciphertext"])
+	    hashes = len(j["hashes"])
+	    print "      Looks like we unlocked the next level!"
+	    print "      It has {} chars of ciphertext and {} hashes.".format(cipher, hashes)
+	    print "      Here is the key that was used to unlock it: {}".format(secret)
+	    success = True
+	except Exception:
+		print "      We most likely don't have enough passwords cracked because what was decrypted doesn't look like a JSON"
+		print "      But still, have a look at the output file to be extra sure!"
+		sys.exit(3)
 
- .-----------------. .----------------.  .----------------.  .----------------. 
-| .--------------. || .--------------. || .--------------. || .--------------. |
-| | ____  _____  | || |     _____    | || |     ______   | || |  _________   | |
-| ||_   \|_   _| | || |    |_   _|   | || |   .' ___  |  | || | |_   ___  |  | |
-| |  |   \ | |   | || |      | |     | || |  / .'   \_|  | || |   | |_  \_|  | |
-| |  | |\ \| |   | || |      | |     | || |  | |         | || |   |  _|  _   | |
-| | _| |_\   |_  | || |     _| |_    | || |  \ `.___.'\  | || |  _| |___/ |  | |
-| ||_____|\____| | || |    |_____|   | || |   `._____.'  | || | |_________|  | |
-| |              | || |              | || |              | || |              | |
-| '--------------' || '--------------' || '--------------' || '--------------' |
- '----------------'  '----------------'  '----------------'  '----------------' 
 
-"""
+	# 5. Save the result of the decryption to a file
+	saveloc = location + ".unlocked.json"
+	f = open(saveloc, "wb")
+	f.write(d)
+	f.close()
+	print "[4/4] Saved what was decrypted to {}".format(saveloc)
+
+	if success:	
+		print "Congratulation!!!!"
+		sys.exit(0)
+	else:
+		sys.exit(3)
+
+if __name__=="__main__":
+	main()

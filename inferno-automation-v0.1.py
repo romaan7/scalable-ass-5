@@ -213,7 +213,7 @@ def main():
                 
                 saveseceret = "00064-unlocked.secrets"
                 s = open(saveseceret, "a+")
-                s.write(secret)
+                s.write("\n%s" % secret)
                 s.close()
                 
                 save_new_hashes = "new-locked.hashses"

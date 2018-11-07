@@ -197,3 +197,5 @@ $6$rounds=656000$2Mous2.t1aoWlq5d$uqazb5DBw9kz8kGK7U1gV55ioAyhBnqAECaJTYjoMQMMr2
 $6$rounds=656000$DEExbGWFyC9/kyat$AK6I/58dySmqY8dv3p6Fh6OcVJpL5DTSp9iZQfjDHuRys2hxAeA.b3pG1ShBO7SjuEWR0MWdugsaKtVeZh902.:/;p0XW@
 $6$rounds=656000$It8yi5JXkcHCZI9x$5.gIRJbdSJsWVQ5rLOLWWIO6JCCKZL0A.HuyZSAXsY.37VKlx/nEudKMog6H0fgyJ6GmwQ.BtcgmFRZ6gL8Mi1:,ki82w1q
 $6$rounds=656000$5VmylIPPhoXgKq.0$8D3wM95FxlGLXmj28sciQDE.PEZ0f6heyotfcPcYtEt795j3ysEoo/gw7JAi9uQ0tE2zJSzhEcFeopnBgUE/x/:,ki8Y^T%
+$argon2i$v=19$m=102400,t=2,p=8$BoAQAmDsfc9Zaw2BUEqpdQ$Yyjh0tkB86T2zeTurOpjXw:,ki8cvbn
+$argon2i$v=19$m=102400,t=2,p=8$KoUwZgzBWGsNwfg/x3hPqQ$Vxb3j2OPDNH7eu42yowi0A:,ki8e3w2

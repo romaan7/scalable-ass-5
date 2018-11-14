@@ -38,3 +38,9 @@ $sha1$480000$LDG1s/eR$mwP/rp/VFaJau71Wwk3huugt36tu:96194715
 $sha1$480000$gsNEgZbL$dBuXW4bjRY3pY5MDnuxg1e9.D8Cw:adrireme
 $sha1$480000$hD2HfNEV$dXSPU12aJH/x8nbnJC6fUgHthFZ2:94939247
 $sha1$480000$q9mH9n58$jLNyO4DQnpU.xgce8TNlLjNUtzP8:Angerin8
+$sha1$480000$u8eNjaWy$npUqpp2lHPWyUvNE5CfZTcB/Ov1I:blarnie6
+$sha1$480000$Ok5pnWmq$aRX/UfkntpI77T7HAxMK6wdC4oOO:cowHIdES
+$sha1$480000$BC9tuNyk$UXRVpZI7mkVz1Cs2ARdkYQkJ3mrg:fuNCtiOn
+$sha1$480000$uXUzkXuT$1GzUj2q2HraVbLXZp9Tu3OMO1KtL:dpxx712u
+$sha1$480000$WifWE2ut$u2RbgGsO6B4pQdDCnlYJ9Q/yROX1:jessikaa
+$sha1$480000$xuyD4u7e$N9xTry6aVQvtyqP8W29onayEz34V:tonyfife

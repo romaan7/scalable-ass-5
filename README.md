@@ -1,7 +1,7 @@
 
 
 
-##### rorys command rough work
+##### command rough work
 
 http://us.download.nvidia.com/tesla/410.72/NVIDIA-Linux-x86_64-410.72.run
 http://us.download.nvidia.com/tesla/384.81/NVIDIA-Linux-x86_64-384.81.run
